@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <img
-      alt="Vue logo"
-      src="./assets/logo.png"
-    >
+    <router-view></router-view>
+    <mainTabbar></mainTabbar>
+    <button @click='test'>btn</button>
   </div>
 </template>
 
 <script>
-
+import mainTabbar from './components/content/mainTabbar'
 export default {
   name: 'App',
   components: {
+    mainTabbar
+  },
+  methods: {
+    test () {
+      console.log(this.$route)
+    }
+  },
+  computed: {
+
   }
 }
+
 </script>
 
 <style>
