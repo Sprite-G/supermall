@@ -1,6 +1,6 @@
 <template>
   <tabbar>
-    <barItem>
+    <barItem path='/home'>
       <img
         slot='icon'
         src='~assets/img/tabbar/cc-home.png'
@@ -11,7 +11,7 @@
       >
       <div slot='text'>首页</div>
     </barItem>
-     <barItem>
+    <barItem path='/category'>
       <img
         slot='icon'
         src='~assets/img/tabbar/category.png'
@@ -22,7 +22,7 @@
       >
       <div slot='text'>分类</div>
     </barItem>
-     <barItem>
+    <barItem path='/cart'>
       <img
         slot='icon'
         src='~assets/img/tabbar/shop-cart-1.png'
@@ -33,7 +33,7 @@
       >
       <div slot='text'>购物车</div>
     </barItem>
-     <barItem>
+    <barItem path='/profile'>
       <img
         slot='icon'
         src='~assets/img/tabbar/profile.png'

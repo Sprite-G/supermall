@@ -9,7 +9,7 @@
     <div v-else>
       <slot name='icon-active'></slot>
     </div>
-    <div>
+    <div :style = activeStyle>
       <slot name='text'></slot>
     </div>
   </div>
@@ -19,17 +19,25 @@
 export default {
   name: 'barItem',
   props: {
+    path: String,
+    activeColor: {
+      type: String,
+      default: 'red'
+    }
   },
+
   methods: {
     itemClick () {
-
+      this.$router.push(this.path)
     }
   },
   computed: {
     isActive () {
-      return true
+      return this.$route.path.indexOf(this.path) != -1
+    },
+    activeStyle () {
+      return this.isActive ? { color: this.activeColor } : {}
     }
-
   }
 }
 
