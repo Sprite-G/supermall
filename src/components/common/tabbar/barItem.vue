@@ -9,7 +9,7 @@
     <div v-else>
       <slot name='icon-active'></slot>
     </div>
-    <div :style = activeStyle>
+    <div :style=activeStyle>
       <slot name='text'></slot>
     </div>
   </div>
@@ -28,7 +28,8 @@ export default {
 
   methods: {
     itemClick () {
-      this.$router.push(this.path)
+      if (this.$route.path != this.path)
+        this.$router.push(this.path)
     }
   },
   computed: {

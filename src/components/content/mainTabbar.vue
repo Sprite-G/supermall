@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import barItem from 'components/common/barItem'
-import tabbar from 'components/common/tabbar'
+import barItem from 'components/common/tabbar/barItem'
+import tabbar from 'components/common/tabbar/tabbar'
 export default {
   name: 'mainTabbar',
   components: {

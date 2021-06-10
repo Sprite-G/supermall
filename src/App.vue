@@ -2,7 +2,7 @@
   <div id="app">
     <router-view></router-view>
     <mainTabbar></mainTabbar>
-    <button @click='test'>btn</button>
+    
   </div>
 </template>
 
@@ -14,9 +14,7 @@ export default {
     mainTabbar
   },
   methods: {
-    test () {
-      console.log(this.$route)
-    }
+
   },
   computed: {
 
