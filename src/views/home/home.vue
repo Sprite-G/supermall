@@ -1,36 +1,34 @@
 <template>
   <div id='home'>
     <navBar class='home-nav'>
-      <div
-        slot='center'
-        class='home-nav'
-      >
-        购物街
-      </div>
+      <div slot='center'> 购物街 </div>
     </navBar>
-
+    <homeSwiper :banners='banners'></homeSwiper>
   </div>
 </template>
 
 <script>
-import navBar from 'components/common/navbar/navBar'
 import { getHomeMultidata } from 'network/home'
+import navBar from 'components/common/navbar/navBar'
+import homeSwiper from './childrenComps/homeSwiper'
 export default {
   name: 'home',
   data () {
     return {
-      banner: null,
-      recommend:null
+      banners: null,
+      recommend: null
     }
   },
   components: {
-    navBar
+    navBar,
+    homeSwiper
   },
   created () {
     getHomeMultidata().then(res => {
-      console.log(res)
-      this.banner = res.data.banner.list
+      // console.log('getHomeMultidata',res)
+      this.banners = res.data.banner.list
       this.recommend = res.data.recommend.list
+      console.log('getHomeMultidata', this.banners)
     })
   }
 }
