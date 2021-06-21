@@ -3,7 +3,8 @@
     <navBar class='home-nav'>
       <div slot='center'> 购物街 </div>
     </navBar>
-    <homeSwiper :banners='banners'></homeSwiper>
+    <!-- <homeSwiper :banners='banners'></homeSwiper> -->
+    <awesomeSwiper :banners='banners'></awesomeSwiper>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import { getHomeMultidata } from 'network/home'
 import navBar from 'components/common/navbar/navBar'
 import homeSwiper from './childrenComps/homeSwiper'
+import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
 export default {
   name: 'home',
   data () {
@@ -21,14 +23,14 @@ export default {
   },
   components: {
     navBar,
-    homeSwiper
+    homeSwiper,
+    awesomeSwiper
   },
   created () {
     getHomeMultidata().then(res => {
       // console.log('getHomeMultidata',res)
       this.banners = res.data.banner.list
       this.recommend = res.data.recommend.list
-      console.log('getHomeMultidata', this.banners)
     })
   }
 }
