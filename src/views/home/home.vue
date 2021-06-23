@@ -14,12 +14,17 @@ import { getHomeMultidata } from 'network/home'
 import navBar from 'components/common/navbar/navBar'
 import homeSwiper from './childrenComps/homeSwiper'
 import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
-import mySwiper from 'components/common/mySwiper/Swiper'
+import mySwiper from 'components/common/mySwiper/mySwiper'
 export default {
   name: 'home',
   data () {
     return {
-      banners: null,
+      banners: {
+        type: Array,
+        default () {
+          return ['nonething']
+        }
+      },
       recommend: null
     }
   },
@@ -31,9 +36,9 @@ export default {
   },
   created () {
     getHomeMultidata().then(res => {
-      // console.log('getHomeMultidata',res)
       this.banners = res.data.banner.list
       this.recommend = res.data.recommend.list
+      console.log('getHomeMultidata', this.banners)
     })
   }
 }
