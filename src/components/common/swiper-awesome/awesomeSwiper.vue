@@ -5,18 +5,20 @@
         v-for='(item, index) in banners'
         :key='index'
       >
-        <img
-          class='swiper-img'
-          :src="item.image"
-          alt=""
-        >
+        <a :href="item.link">
+          <img
+            class='swiper-img'
+            :src="item.image"
+            alt=""
+          >
+        </a>
       </swiper-slide>
       <div
         class="swiper-pagination"
         slot="pagination"
       ></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <!-- <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> -->
     </swiper>
   </div>
 
@@ -27,7 +29,7 @@ export default {
   name: 'awesomeSwiper',
   props: {
     banners: {
-      type: Array,
+      // type: Array,
       default () {
         return []
       }
@@ -38,12 +40,12 @@ export default {
       swiperOptions: {
         pagination: '.swiper-pagination',
         loop: true,
-        // autoplay: 3000,
+        autoplay: 3000,
         effect: 'flip',
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+        // navigation: {
+        //   nextEl: '.swiper-button-next',
+        //   prevEl: '.swiper-button-prev',
+        // },
       }
     }
   },
@@ -58,7 +60,7 @@ export default {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  /* padding-bottom: 40%; */
+  padding-bottom: 0%;
 }
 .swiper-img {
   width: 100%;

@@ -3,18 +3,18 @@
     <navBar class='home-nav'>
       <div slot='center'> 购物街 </div>
     </navBar>
-    <!-- <homeSwiper :banners='banners'></homeSwiper> -->
-    <!-- <awesomeSwiper :banners='banners'></awesomeSwiper> -->
-    <mySwiper :banners='banners'></mySwiper>
+    <awesomeSwiper :banners='banners'></awesomeSwiper>
+    <recommendView :recommends='recommend'></recommendView>
   </div>
 </template>
 
 <script>
 import { getHomeMultidata } from 'network/home'
 import navBar from 'components/common/navbar/navBar'
-import homeSwiper from './childrenComps/homeSwiper'
+// import homeSwiper from './childrenComps/homeSwiper'
 import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
-import mySwiper from 'components/common/mySwiper/mySwiper'
+// import mySwiper from 'components/common/mySwiper/mySwiper'
+import RecommendView from './childrenComps/RecommendView.vue'
 export default {
   name: 'home',
   data () {
@@ -30,9 +30,10 @@ export default {
   },
   components: {
     navBar,
-    homeSwiper,
+    // homeSwiper,
     awesomeSwiper,
-    mySwiper
+    // mySwiper,
+    RecommendView
   },
   created () {
     getHomeMultidata().then(res => {
