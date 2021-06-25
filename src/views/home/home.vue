@@ -5,6 +5,7 @@
     </navBar>
     <awesomeSwiper :banners='banners'></awesomeSwiper>
     <recommendView :recommends='recommend'></recommendView>
+    <featureView></featureView>
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import navBar from 'components/common/navbar/navBar'
 import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
 // import mySwiper from 'components/common/mySwiper/mySwiper'
 import RecommendView from './childrenComps/RecommendView.vue'
+import featureView from './childrenComps/featureView.vue'
 export default {
   name: 'home',
   data () {
@@ -33,7 +35,8 @@ export default {
     // homeSwiper,
     awesomeSwiper,
     // mySwiper,
-    RecommendView
+    RecommendView,
+    featureView
   },
   created () {
     getHomeMultidata().then(res => {
@@ -46,8 +49,17 @@ export default {
 
 </script>
 <style scoped>
+#home{
+  padding-top: 44px;
+}
 .home-nav {
   background-color: var(--color-tint);
   color: white;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
 }
 </style>
