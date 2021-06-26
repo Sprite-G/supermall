@@ -6,15 +6,19 @@
     <awesomeSwiper :banners='banners'></awesomeSwiper>
     <recommendView :recommends='recommend'></recommendView>
     <featureView></featureView>
+    <tabControl :titles="titles"></tabControl>
   </div>
 </template>
 
 <script>
 import { getHomeMultidata } from 'network/home'
+
 import navBar from 'components/common/navbar/navBar'
+import tabControl from 'components/content/tabControl/tabControl'
 // import homeSwiper from './childrenComps/homeSwiper'
 import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
 // import mySwiper from 'components/common/mySwiper/mySwiper'
+
 import RecommendView from './childrenComps/RecommendView.vue'
 import featureView from './childrenComps/featureView.vue'
 export default {
@@ -27,11 +31,13 @@ export default {
           return ['nonething']
         }
       },
-      recommend: null
+      recommend: null,
+      titles:['流行','新款','精选']
     }
   },
   components: {
     navBar,
+    tabControl,
     // homeSwiper,
     awesomeSwiper,
     // mySwiper,
