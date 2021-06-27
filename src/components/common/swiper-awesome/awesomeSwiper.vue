@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted', this.banners)
+    // console.log('mounted', this.banners)
   }
 }
 
