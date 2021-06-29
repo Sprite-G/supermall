@@ -115,7 +115,7 @@ export default {
       scroll: null
     }
   },
-  created () {
+  created () {  //created还未加载dom
     // new BScroll('.content',{
 
     // })
@@ -133,7 +133,7 @@ export default {
       console.log('111')
       //发送网络请求
       setTimeout(() => {
-        this.scroll.finishPullUp()
+        this.scroll.finishPullUp()   //结束本次上拉加载请求然后才能再次请求
       }, 2000)
     })
   }
