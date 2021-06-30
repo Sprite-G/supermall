@@ -7,6 +7,8 @@
       class='content'
       @backTopCtrl='backTopCtrl'
       ref='scroll'
+      :pullUpLoad='true'
+      @pullingUp='loadMore'
     >
       <awesomeSwiper :banners='banners'></awesomeSwiper>
       <recommendView :recommends='recommend'></recommendView>
@@ -88,6 +90,14 @@ export default {
   },
   mounted () {
   },
+  // watch: {
+  //   showGoods (val, oldval) {
+  //     if (val !== oldval) {
+  //       console.log('false')
+  //       this.$refs.scroll.scroll.refresh()
+  //     }
+  //   }
+  // },
   computed: {
     showGoods () {
       return this.goods[this.goodsKey].list
@@ -101,7 +111,9 @@ export default {
       // this.$refs.scroll.scroll.scrollTo(0, -60, 300) 通过$refs获取scroll元素便可调用其方法
       this.$refs.scroll.scrollToTop()  //对方法进行封装
     },
-
+    loadMore () {
+      this.getHomeGoods_M(this.goodsKey)
+    },
     /**
      * 时间监听相关
      */
@@ -132,6 +144,8 @@ export default {
       const page = this.goods[type].page + 1
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.list)
+        this.goods[type].page += 1
+        this.$refs.scroll.scroll.refresh()
       })
     }
   }

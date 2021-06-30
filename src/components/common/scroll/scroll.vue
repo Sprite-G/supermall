@@ -15,11 +15,19 @@ import BScroll from 'better-scroll'
 
 export default {
   name: 'scroll',
+  props: {
+    pullUpLoad: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    }
+  },
   mounted () {
     // document.querySelector('.wrapper') 获取第一个对应的class元素，当有多个同样的class时不准确
     let scroll = new BScroll(this.$refs.wrapper, {
       probeType: 3,
-      pullUpLoad: true,
+      pullUpLoad: this.pullUpLoad,
       click: true  //默认scroll里不可点击
     })
     this.scroll = scroll
@@ -34,9 +42,10 @@ export default {
     })
     scroll.on('pullingUp', () => {
       console.log('加载更多')
+      this.$emit('pullingUp')
+      // scroll.refresh()
       setTimeout(() => {
         scroll.finishPullUp()
-        scroll.refresh()
       }, 2000)
     })
   },
