@@ -35,9 +35,9 @@ export default {
       // console.log(pos.y)
       // console.log(scroll.maxScrollY)
       if (Math.abs(pos.y) > Math.abs(scroll.maxScrollY / 2)) {
-        this.$emit('backTopCtrl', true)
+        this.$emit('backTopCtrl', true, pos.y)
       } else {
-        this.$emit('backTopCtrl', false)
+        this.$emit('backTopCtrl', false, pos.y)
       }
     })
     scroll.on('pullingUp', () => {
@@ -51,7 +51,11 @@ export default {
   },
   methods: {
     scrollToTop () {
-      this.scroll.scrollTo(0, -60, 300)
+      this.scroll && this.scroll.scrollTo(0, -60, 300)
+    },
+    refresh () {
+      console.log('refresh')
+      this.scroll && this.scroll.refresh()
     }
   }
 }

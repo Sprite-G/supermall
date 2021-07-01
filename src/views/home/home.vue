@@ -3,20 +3,31 @@
     <navBar class='home-nav'>
       <div slot='center'> 购物街 </div>
     </navBar>
+    <!-- 控制显示或隐藏另一个tabControl来实现吸顶效果 -->
+    <tabControl
+      :titles="titles"
+      class='tab-control-show'
+      @tabClick='tabClick'
+      ref='tabControl2'
+      v-show='isTabFixed'
+    ></tabControl>
     <scroll
       class='content'
-      @backTopCtrl='backTopCtrl'
+      @backTopCtrl='backTopCtrl(arguments)'
       ref='scroll'
       :pullUpLoad='true'
       @pullingUp='loadMore'
     >
-      <awesomeSwiper :banners='banners'></awesomeSwiper>
+      <awesomeSwiper
+        :banners='banners'
+        @offsetImg='offsetImg'
+      ></awesomeSwiper>
       <recommendView :recommends='recommend'></recommendView>
       <featureView></featureView>
       <tabControl
         :titles="titles"
-        class='tab-control'
         @tabClick='tabClick'
+        ref='tabControl'
       ></tabControl>
       <goodsList :goods='showGoods'></goodsList>
     </scroll>
@@ -65,7 +76,10 @@ export default {
         sell: { page: 0, list: [] }
       },
       goodsKey: 'pop',
-      backTopShow: false
+      backTopShow: false,
+      tabControlOffsetTop: null,
+      isTabFixed: false,
+      scrollY: 0
     }
   },
   components: {
@@ -87,25 +101,50 @@ export default {
     this.getHomeGoods_M('pop')
     this.getHomeGoods_M('new')
     this.getHomeGoods_M('sell')
+
+
   },
   mounted () {
+    const refresh = this.debounce(this.$refs.scroll.refresh, 500)
+    this.$bus.$on('itemImgLoad', () => {  //使用事件总线监听数据的变化
+      refresh()
+    })
+
   },
-  // watch: {
-  //   showGoods (val, oldval) {
-  //     if (val !== oldval) {
-  //       console.log('false')
-  //       this.$refs.scroll.scroll.refresh()
-  //     }
-  //   }
-  // },
+  activated () {
+    this.$refs.scroll.scroll.scrollTo(0, this.scrollY, 0)
+  },
+  deactivated () {
+    this.scrollY = this.$refs.scroll.scroll.y
+  },
   computed: {
     showGoods () {
       return this.goods[this.goodsKey].list
     }
   },
   methods: {
+    //所有组件都有一个$el属性来获取组件中的元素
+    //获取组件元素的offsetTop属性
+    offsetImg () {
+      this.tabControlOffsetTop = this.$refs.tabControl.$el.offsetTop
+    },
+    debounce (func, delay) {   //防抖（节流）函数，防止请求过多等
+      let timer
+      return function (...args) {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, delay)
+      }
+    },
     backTopCtrl (val) {
-      this.backTopShow = val
+      this.backTopShow = val[0]
+      //tabControl吸顶控制
+      if (this.tabControlOffsetTop && this.tabControlOffsetTop < Math.abs(val[1])) {
+        this.isTabFixed = true
+      } else {
+        this.isTabFixed = false
+      }
     },
     backTop () {
       // this.$refs.scroll.scroll.scrollTo(0, -60, 300) 通过$refs获取scroll元素便可调用其方法
@@ -129,6 +168,8 @@ export default {
           this.goodsKey = 'sell';
           break
       }
+      this.$refs.tabControl.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
     /**
      * 网络请求相关
@@ -145,7 +186,7 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
-        this.$refs.scroll.scroll.refresh()
+        console.log('111')
       })
     }
   }
@@ -154,7 +195,7 @@ export default {
 </script>
 <style scoped>
 #home {
-  padding-top: 44px;
+  /* padding-top: 44px; */
   /* 设置高度为100%屏幕 */
   height: 100vh;
   position: relative;
@@ -163,15 +204,17 @@ export default {
   background-color: var(--color-tint);
   color: white;
 
-  position: fixed;
+  /* 下面这些属性用于控制原生滚动的显示 */
+  /* position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  z-index: 9;
+  z-index: 9; */
 }
-.tab-control {
-  position: sticky;
-  top: 44px;
+.tab-control-show {
+  /* 设定层级需要配合position属性才可使用 */
+  position: relative;
+  z-index: 9;
 }
 .content {
   overflow: hidden;

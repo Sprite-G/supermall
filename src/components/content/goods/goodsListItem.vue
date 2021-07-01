@@ -3,6 +3,7 @@
     <img
       :src="item.show.img"
       alt=""
+      @load='imgLoad'
     >
     <div class='goods-info'>
       <p>{{item.title}}</p>
@@ -25,6 +26,12 @@ export default {
     }
   },
   mounted () {
+  },
+  methods:{
+    //vue元素自带load方法
+    imgLoad(){
+      this.$bus.$emit('itemImgLoad')
+    }
   }
 }
 

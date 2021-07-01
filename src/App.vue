@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <!-- 使用keep-alive使页面不需要重复加载 -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <mainTabbar></mainTabbar>
-    
+
   </div>
 </template>
 

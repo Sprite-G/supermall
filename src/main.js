@@ -7,6 +7,8 @@ import 'swiper/swiper-bundle.css'
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
 
+Vue.prototype.$bus = new Vue()
+
 new Vue({
   router,
   render: h => h(App),

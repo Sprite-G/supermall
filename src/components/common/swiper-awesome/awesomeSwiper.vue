@@ -10,6 +10,7 @@
             class='swiper-img'
             :src="item.image"
             alt=""
+            @load='imgLoad'
           >
         </a>
       </swiper-slide>
@@ -46,11 +47,19 @@ export default {
         //   nextEl: '.swiper-button-next',
         //   prevEl: '.swiper-button-prev',
         // },
-      }
+      },
     }
   },
   mounted () {
     // console.log('mounted', this.banners)
+  },
+  methods: {
+    imgLoad () {
+      if (!this.isImgLoad) {
+        this.$emit('offsetImg')
+        this.isImgLoad = true
+      }
+    }
   }
 }
 
