@@ -20,10 +20,14 @@ export default {
       default () {
         return []
       }
-    }
+    },
+    test:String
   },
   components: {
     goodsListItem
+  },
+  created(){
+    console.log(this.test)
   }
 }
 

@@ -29,7 +29,11 @@
         @tabClick='tabClick'
         ref='tabControl'
       ></tabControl>
-      <goodsList :goods='showGoods'></goodsList>
+      <goodsList
+        :goods='showGoods'
+        test='test'
+      ></goodsList>
+      <!-- 父组件向子组件传值时传字符串之类简单的值不需要bind，变量才需要 -->
     </scroll>
     <!-- 组件无法直接监听点击，需要click.native -->
     <backTop
@@ -111,6 +115,8 @@ export default {
     })
 
   },
+  //被包含在 keep-alive 中创建的组件，会多出两个生命周期的钩子: activated 与 deactivated
+  //用两个生命周期钩子保存状态以实现滚动进度的保存
   activated () {
     this.$refs.scroll.scroll.scrollTo(0, this.scrollY, 0)
   },
@@ -186,7 +192,6 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
-        console.log('111')
       })
     }
   }

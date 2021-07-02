@@ -1,5 +1,8 @@
 <template>
-  <div class='goods-item'>
+  <div
+    class='goods-item'
+    @click='toDetail'
+  >
     <img
       :src="item.show.img"
       alt=""
@@ -27,10 +30,22 @@ export default {
   },
   mounted () {
   },
-  methods:{
+  methods: {
     //vue元素自带load方法
-    imgLoad(){
+    imgLoad () {
       this.$bus.$emit('itemImgLoad')
+    },
+    toDetail () {
+      //使用prams传值时需要在地址后加/+
+      // this.$router.push('./detail/'+this.item.iid)
+      
+      //使用prams传值时不需要在地址后加/
+      this.$router.push({
+        path: './detail',
+        query: {
+          id: this.item.iid
+        }
+      })
     }
   }
 }
