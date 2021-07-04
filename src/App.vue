@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <!-- 使用keep-alive使页面不需要重复加载 -->
-    <keep-alive>
+    <!-- 使用keep-alive使页面不需要重复加载,可指定排除项exclude -->
+    <keep-alive exclude="detail">
       <router-view></router-view>
     </keep-alive>
     <mainTabbar></mainTabbar>
-
   </div>
 </template>
 

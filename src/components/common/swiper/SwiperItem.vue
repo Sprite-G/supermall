@@ -1,6 +1,8 @@
 <template>
   <div class="slide">
-    <slot></slot>
+     <swiper-slide>
+       
+      </swiper-slide>
   </div>
 </template>
 
@@ -11,10 +13,10 @@
 </script>
 
 <style scoped>
-  .slide {
+  /* .slide {
     width: 100%;
     flex-shrink: 0;
-  }
+  } */
 
   .slide img {
     width: 100%;

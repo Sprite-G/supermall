@@ -1,21 +1,39 @@
 <template>
-  <div>
-    详情页{{id}}
+  <div id='detail'>
+    <detailNavBar></detailNavBar>
+    <detailSwiper :imgs='topImgs'></detailSwiper>
   </div>
 </template>
 
 <script>
+import { getDetail } from 'network/detail.js'
+
+import detailNavBar from './detailComps/detailNavBar.vue'
+
+import detailSwiper from './detailComps/detailSwiper'
+
 export default {
   name: 'detail',
   data () {
     return {
-      id: null
+      iid: null,
+      topImgs: null
     }
   },
-  created(){
+  components: {
+    detailNavBar,
+    detailSwiper
+  },
+  created () {
     // this.id = this.$route.params.id
-    this.id = this.$route.query.id
-    console.log(this.$route.query)
+    this.iid = this.$route.query.iid
+    getDetail(this.iid).then(res => {
+      this.topImgs = res.result.itemInfo.topImages
+      console.log(this.topImgs)
+    })
+  },
+  mounted () {
+
   }
 }
 

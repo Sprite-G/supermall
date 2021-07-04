@@ -1,37 +1,43 @@
 <template>
-  <swiper>
-    <swiperItem
-      v-for='(item, index) in banners'
-      :key='index'
-    >
-      <a :href="item.link">
-        <img
-          :src="item.image"
-          alt=""
-        >
-      </a>
-    </swiperItem>
-  </swiper>
+  <div>
+    <mySwiper>
+      <div
+        v-for='(item, index) in banners'
+        :key='index'
+      >
+        <a :href="item.link">
+          <img
+            class='img'
+            :src="item.image"
+            alt=""
+          >
+        </a>
+      </div>
+    </mySwiper>
+  </div>
+
 </template>
 
 <script>
-import { Swiper, SwiperItem } from 'components/common/swiper/index'
+import mySwiper from 'components/common/swiper/Swiper'
 export default {
   name: 'homeSwiper',
   props: {
     banners: {
-      type: Array,
+      // type: Array,
       default () {
         return []
       }
     }
   },
   components: {
-    Swiper,
-    SwiperItem
+    mySwiper
   }
 }
 
 </script>
 <style scoped>
+.img{
+  width: 100%;
+}
 </style>

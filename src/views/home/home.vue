@@ -51,9 +51,8 @@ import {
 
 import navBar from 'components/common/navbar/navBar'
 import tabControl from 'components/content/tabControl/tabControl'
-// import homeSwiper from './childrenComps/homeSwiper'
+import homeSwiper from './childrenComps/homeSwiper'
 import awesomeSwiper from 'components/common/swiper-awesome/awesomeSwiper'
-// import mySwiper from 'components/common/mySwiper/mySwiper'
 import goodsList from 'components/content/goods/goodsList'
 import scroll from 'components/common/scroll/scroll'
 
@@ -89,9 +88,8 @@ export default {
   components: {
     navBar,
     tabControl,
-    // homeSwiper,
+    homeSwiper,
     awesomeSwiper,
-    // mySwiper,
     goodsList,
     scroll,
 
