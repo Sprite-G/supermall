@@ -21,3 +21,14 @@ export class Goods {
     this.realPrice = itemInfo.lowNowPrice
   }
 }
+
+export class shop{
+  constructor(shopInfo){
+    this.logo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.fans = shopInfo.sFans;
+    this.sells = shopInfo.sSells;
+    this.score = shopInfo.score;
+    this.goodsCount = shopInfo.cGoods;
+  }
+}

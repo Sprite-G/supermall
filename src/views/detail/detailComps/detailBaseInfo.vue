@@ -20,7 +20,7 @@
     <div class='info-service'>
       <span
         class='info-service-item'
-        v-for="index in goods.services.length"
+        v-for="index in goods.services.length-1"
         :key='index'
       >
         <img
@@ -48,7 +48,7 @@ export default {
 </script>
 <style scoped>
 .base-info {
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px;
 }
 .info-title {
   margin-bottom: 10px;
@@ -82,20 +82,24 @@ export default {
   left: 5px;
 }
 .info-other {
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+  /* margin-bottom: 10px; */
   font-size: 12px;
   display: flex;
   border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+  justify-content: space-between;
 }
 .info-other span {
-  flex: 1;
+  /* flex: 1; */ 
+  /* 选择使用justify-content布局 */
   text-align: center;
 }
 .info-service {
   display: flex;
-}
-.info-service span {
-  flex: 1;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 5px solid rgba(100, 100, 100, 0.1);
+
 }
 .info-service-item img {
   width: 14px;
@@ -107,4 +111,20 @@ export default {
   font-size: 13px;
   color: #333;
 }
+/* .info-service {
+  display: flex;
+  justify-content: space-between;
+  line-height: 60px;
+
+}
+.info-service-item img {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 2px;
+}
+.info-service-item span {
+  font-size: 13px;
+  color: #333;
+} */
 </style>
