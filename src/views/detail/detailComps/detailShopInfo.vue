@@ -44,6 +44,9 @@
         </table>
       </div>
     </div>
+    <div class='shop-bottom'>
+      <div class="enter-shop">进店逛逛</div>
+    </div>
   </div>
 </template>
 
@@ -93,7 +96,7 @@ export default {
 .goods-count {
   font-size: 18px;
 }
-.info-sells{
+.info-sells {
   margin-top: -3.5px;
 }
 
@@ -103,5 +106,42 @@ export default {
   font-size: 12px;
 }
 .shop-middle-right {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 13px;
+  color: #333;
+}
+.shop-middle-right table {
+  width: 120px;
+}
+.shop-middle-right table td {
+  padding: 5px 0;
+}
+.score {
+  color: #5ea732;
+}
+.score-better {
+  color: var(--color-high-text);
+}
+.better span {
+  background-color: #5ea732;
+  color: white;
+}
+.better-more span {
+  background-color: var(--color-high-text);
+}
+.shop-bottom {
+  text-align: center;
+  margin-top: 10px;
+}
+.enter-shop {
+  display: inline-block;
+  font-size: 14px;
+  background-color: #f2f5f8;
+  width: 150px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 10px;
 }
 </style>
