@@ -1,9 +1,16 @@
 <template>
   <div id='detail'>
     <detailNavBar></detailNavBar>
-    <detailSwiper :imgs='topImgs'></detailSwiper>
-    <detailBaseInfo :goods='goods'></detailBaseInfo>
-    <detailShopInfo :shop='shop'></detailShopInfo>
+    <scroll
+      class='content'
+      @backTopCtrl='backTopCtrl(arguments)'
+      @pullingUp='loadMore'
+    >
+      <detailSwiper :imgs='topImgs'></detailSwiper>
+      <detailBaseInfo :goods='goods'></detailBaseInfo>
+      <detailShopInfo :shop='shop'></detailShopInfo>
+    </scroll>
+
   </div>
 </template>
 
@@ -14,6 +21,9 @@ import detailNavBar from './detailComps/detailNavBar.vue'
 import detailSwiper from './detailComps/detailSwiper'
 import detailBaseInfo from './detailComps/detailBaseInfo'
 import detailShopInfo from './detailComps/detailShopInfo'
+
+import scroll from 'components/common/scroll/scroll'
+
 export default {
   name: 'detail',
   data () {
@@ -28,7 +38,9 @@ export default {
     detailNavBar,
     detailSwiper,
     detailBaseInfo,
-    detailShopInfo
+    detailShopInfo,
+
+    scroll
   },
   created () {
     // this.id = this.$route.params.id
@@ -42,10 +54,34 @@ export default {
     })
   },
   mounted () {
+    
+  },
+  methods:{
+    loadMore(){ 
+      
+    },
+    backTopCtrl(){
 
+    }
   }
 }
 
 </script>
 <style scoped>
+#detail {
+  position: relative;
+  /* 跟位置有关的设置都必须先设置position */
+  z-index: 9;
+  background-color: white;
+}
+.content {
+  overflow: hidden;
+  /* position: absolute; */
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+  /* height: calc(100% - 44px - 44px); */
+  /* overflow: hidden; */
+}
 </style>
