@@ -3,24 +3,32 @@
     <detailNavBar></detailNavBar>
     <scroll
       class='content'
-      @backTopCtrl='backTopCtrl(arguments)'
-      @pullingUp='loadMore'
+      ref='scroll'
+      :pullUpLoad='true'
     >
+
       <detailSwiper :imgs='topImgs'></detailSwiper>
       <detailBaseInfo :goods='goods'></detailBaseInfo>
       <detailShopInfo :shop='shop'></detailShopInfo>
+      <detailGoodsInfo
+        :detailInfo='detailInfo'
+        @imgLoad='imgLoad'
+      ></detailGoodsInfo>
+      <detailParamInfo :paramInfo='paramInfo'></detailParamInfo>
     </scroll>
 
   </div>
 </template>
 
 <script>
-import { getDetail, Goods, shop } from 'network/detail.js'
+import { getDetail, Goods, shop, goodsParam } from 'network/detail.js'
 
 import detailNavBar from './detailComps/detailNavBar.vue'
 import detailSwiper from './detailComps/detailSwiper'
 import detailBaseInfo from './detailComps/detailBaseInfo'
 import detailShopInfo from './detailComps/detailShopInfo'
+import detailGoodsInfo from './detailComps/detailGoodsInfo'
+import detailParamInfo from './detailComps/detailParamInfo'
 
 import scroll from 'components/common/scroll/scroll'
 
@@ -31,7 +39,9 @@ export default {
       iid: null,
       topImgs: null,
       goods: {},
-      shop: {}
+      shop: {},
+      detailInfo: {},
+      paramInfo: {}
     }
   },
   components: {
@@ -39,6 +49,8 @@ export default {
     detailSwiper,
     detailBaseInfo,
     detailShopInfo,
+    detailGoodsInfo,
+    detailParamInfo,
 
     scroll
   },
@@ -50,18 +62,23 @@ export default {
       this.topImgs = data.itemInfo.topImages
       this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
       this.shop = new shop(data.shopInfo)
-      console.log(this.shop);
+      this.detailInfo = data.detailInfo
+      this.paramInfo = new goodsParam(data.itemParams.info,data.itemParams.rule)
+      console.log(this.detailInfo);
     })
   },
   mounted () {
-    
-  },
-  methods:{
-    loadMore(){ 
-      
-    },
-    backTopCtrl(){
 
+  },
+  methods: {
+    loadMore () {
+
+    },
+    backTopCtrl () {
+
+    },
+    imgLoad () {
+      this.$refs.scroll.refresh()
     }
   }
 }
@@ -73,15 +90,15 @@ export default {
   /* 跟位置有关的设置都必须先设置position */
   z-index: 9;
   background-color: white;
+  height: 100vh;
 }
 .content {
   overflow: hidden;
-  /* position: absolute; */
+  position: absolute;
   top: 44px;
   bottom: 49px;
   left: 0;
   right: 0;
   /* height: calc(100% - 44px - 44px); */
-  /* overflow: hidden; */
 }
 </style>

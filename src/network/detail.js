@@ -22,13 +22,20 @@ export class Goods {
   }
 }
 
-export class shop{
-  constructor(shopInfo){
+export class shop {
+  constructor(shopInfo) {
     this.logo = shopInfo.shopLogo;
     this.name = shopInfo.name;
     this.fans = shopInfo.sFans;
     this.sells = shopInfo.sSells;
     this.score = shopInfo.score;
     this.goodsCount = shopInfo.cGoods;
+  }
+}
+export class goodsParam {
+  constructor(info, rule) {
+    this.image = info.images ? info.images[0] : '';
+    this.infos = info.set;
+    this.sizes = rule.tables
   }
 }
