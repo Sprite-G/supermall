@@ -15,6 +15,7 @@
         @imgLoad='imgLoad'
       ></detailGoodsInfo>
       <detailParamInfo :paramInfo='paramInfo'></detailParamInfo>
+      <detailCommentInfo :commentInfo='commentInfo'></detailCommentInfo>
     </scroll>
 
   </div>
@@ -29,6 +30,8 @@ import detailBaseInfo from './detailComps/detailBaseInfo'
 import detailShopInfo from './detailComps/detailShopInfo'
 import detailGoodsInfo from './detailComps/detailGoodsInfo'
 import detailParamInfo from './detailComps/detailParamInfo'
+import detailCommentInfo from './detailComps/detailCommentInfo'
+
 
 import scroll from 'components/common/scroll/scroll'
 
@@ -41,7 +44,9 @@ export default {
       goods: {},
       shop: {},
       detailInfo: {},
-      paramInfo: {}
+      paramInfo: {},
+      commentInfo: {}
+
     }
   },
   components: {
@@ -51,6 +56,7 @@ export default {
     detailShopInfo,
     detailGoodsInfo,
     detailParamInfo,
+    detailCommentInfo,
 
     scroll
   },
@@ -63,8 +69,11 @@ export default {
       this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
       this.shop = new shop(data.shopInfo)
       this.detailInfo = data.detailInfo
-      this.paramInfo = new goodsParam(data.itemParams.info,data.itemParams.rule)
-      console.log(this.detailInfo);
+      this.paramInfo = new goodsParam(data.itemParams.info, data.itemParams.rule)
+      if (data.rate.cRare != 0) {
+        this.commentInfo = data.rate.list[0]
+      }
+      console.log(data.rate);
     })
   },
   mounted () {
