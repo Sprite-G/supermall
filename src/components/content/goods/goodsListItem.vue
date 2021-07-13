@@ -4,7 +4,7 @@
     @click='toDetail'
   >
     <img
-      :src="item.show.img"
+      :src="imgUrl"
       alt=""
       @load='imgLoad'
     >
@@ -30,6 +30,11 @@ export default {
   },
   mounted () {
   },
+  computed: {
+    imgUrl () {
+      return this.item.image||this.item.show.img
+    }
+  },
   methods: {
     //vue元素自带load方法
     imgLoad () {
@@ -38,7 +43,7 @@ export default {
     toDetail () {
       //使用prams传值时需要在地址后加/+
       // this.$router.push('./detail/'+this.item.iid)
-      
+
       //使用prams传值时不需要在地址后加/
       this.$router.push({
         path: './detail',

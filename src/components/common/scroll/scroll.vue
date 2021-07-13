@@ -43,7 +43,6 @@ export default {
     scroll.on('pullingUp', () => {
       console.log('加载更多')
       this.$emit('pullingUp')
-      // scroll.refresh()
       setTimeout(() => {
         scroll.finishPullUp()
       }, 2000)

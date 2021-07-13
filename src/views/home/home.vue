@@ -107,18 +107,21 @@ export default {
 
   },
   mounted () {
-    const refresh = this.debounce(this.$refs.scroll.refresh, 500)
-    this.$bus.$on('itemImgLoad', () => {  //使用事件总线监听数据的变化
-      refresh()
-    })
 
   },
   //被包含在 keep-alive 中创建的组件，会多出两个生命周期的钩子: activated 与 deactivated
   //用两个生命周期钩子保存状态以实现滚动进度的保存
   activated () {
+    const refresh = this.debounce(this.$refs.scroll.refresh, 500)
+    this.itemImgListener = () => {  //使用事件总线监听数据的变化
+      refresh()                    //对监听的事件进行命名以准确停止监听该事件
+    }
+    this.$bus.$on('itemImgLoad', this.itemImgListener)
+
     this.$refs.scroll.scroll.scrollTo(0, this.scrollY, 0)
   },
   deactivated () {
+    this.$bus.$off('itemImgLoad', this.itemImgListener)
     this.scrollY = this.$refs.scroll.scroll.y
   },
   computed: {

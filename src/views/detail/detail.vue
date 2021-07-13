@@ -16,13 +16,14 @@
       ></detailGoodsInfo>
       <detailParamInfo :paramInfo='paramInfo'></detailParamInfo>
       <detailCommentInfo :commentInfo='commentInfo'></detailCommentInfo>
+      <goodsList :goods='recommends' />
     </scroll>
 
   </div>
 </template>
 
 <script>
-import { getDetail, Goods, shop, goodsParam } from 'network/detail.js'
+import { getDetail, Goods, shop, goodsParam, getRecommend } from 'network/detail.js'
 
 import detailNavBar from './detailComps/detailNavBar.vue'
 import detailSwiper from './detailComps/detailSwiper'
@@ -32,6 +33,7 @@ import detailGoodsInfo from './detailComps/detailGoodsInfo'
 import detailParamInfo from './detailComps/detailParamInfo'
 import detailCommentInfo from './detailComps/detailCommentInfo'
 
+import goodsList from 'components/content/goods/goodsList'
 
 import scroll from 'components/common/scroll/scroll'
 
@@ -45,8 +47,8 @@ export default {
       shop: {},
       detailInfo: {},
       paramInfo: {},
-      commentInfo: {}
-
+      commentInfo: {},
+      recommends: []
     }
   },
   components: {
@@ -57,6 +59,8 @@ export default {
     detailGoodsInfo,
     detailParamInfo,
     detailCommentInfo,
+
+    goodsList,
 
     scroll
   },
@@ -74,6 +78,9 @@ export default {
         this.commentInfo = data.rate.list[0]
       }
       console.log(data.rate);
+    })
+    getRecommend().then(res => {
+      this.recommends = res.data.list
     })
   },
   mounted () {

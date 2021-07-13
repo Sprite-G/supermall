@@ -48,7 +48,8 @@ export default {
       //   1. 将时间戳转化为Date对象
       const date = new Date(value * 1000)
       console.log('xxx', date)
-      return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+      // return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+      return formatDate(date, 'yyyy-MM-dd')
     }
   },
   computed: {
@@ -78,5 +79,36 @@ export default {
 .header-more {
   float: right;
   margin-right: 10px;
+}
+.info-user {
+  margin: 5px 0px;
+}
+.info-user img {
+  width: 50px;
+  border-radius: 50%;
+}
+.info-user span {
+  position: relative;
+  top: -20px;
+  font-size: 15px;
+  left: 10px;
+}
+.info-detail {
+  color: #777;
+  line-height: 1.5;
+}
+.info-detail p {
+  font-size: 15px;
+  margin: 5px 0px;
+}
+.info-other {
+  font-size: 14px;
+}
+.data {
+  margin-right: 10px;
+}
+.info-imgs img{
+  width: 70px;
+  margin-right: 5px;
 }
 </style>
