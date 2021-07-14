@@ -1,6 +1,6 @@
 <template>
   <div id='detail'>
-    <detailNavBar></detailNavBar>
+    <detailNavBar @titleClick='titleClick'></detailNavBar>
     <scroll
       class='content'
       ref='scroll'
@@ -14,9 +14,9 @@
         :detailInfo='detailInfo'
         @imgLoad='imgLoad'
       ></detailGoodsInfo>
-      <detailParamInfo :paramInfo='paramInfo'></detailParamInfo>
-      <detailCommentInfo :commentInfo='commentInfo'></detailCommentInfo>
-      <goodsList :goods='recommends' />
+      <detailParamInfo ref='paramInfo' :paramInfo='paramInfo'></detailParamInfo>
+      <detailCommentInfo ref='commentInfo' :commentInfo='commentInfo'></detailCommentInfo>
+      <goodsList ref='recommends' :goods='recommends' />
     </scroll>
 
   </div>
@@ -24,6 +24,10 @@
 
 <script>
 import { getDetail, Goods, shop, goodsParam, getRecommend } from 'network/detail.js'
+
+import { itemListenerMixin } from 'common/mixin'
+
+import { debounce } from 'common/utils'
 
 import detailNavBar from './detailComps/detailNavBar.vue'
 import detailSwiper from './detailComps/detailSwiper'
@@ -39,6 +43,7 @@ import scroll from 'components/common/scroll/scroll'
 
 export default {
   name: 'detail',
+  mixins: [itemListenerMixin],
   data () {
     return {
       iid: null,
@@ -48,7 +53,8 @@ export default {
       detailInfo: {},
       paramInfo: {},
       commentInfo: {},
-      recommends: []
+      recommends: [],
+      themeTopY: [0, 1000, 2000, 3000]
     }
   },
   components: {
@@ -77,7 +83,14 @@ export default {
       if (data.rate.cRare != 0) {
         this.commentInfo = data.rate.list[0]
       }
-      console.log(data.rate);
+      this.getThemeTopY = debounce(()=>{
+        this.themeTopY = []
+        this.themeTopY.push(0)
+        this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
+        this.themeTopY.push(this.$refs.commentInfo.$el.offsetTop)
+        this.themeTopY.push(this.$refs.recommends.$el.offsetTop)
+        console.log('getThemeTopY', this.themeTopY);
+      })
     })
     getRecommend().then(res => {
       this.recommends = res.data.list
@@ -95,6 +108,11 @@ export default {
     },
     imgLoad () {
       this.$refs.scroll.refresh()
+       this.getThemeTopY()
+    },
+    titleClick (index) {
+      console.log(index);
+      this.$refs.scroll.scroll.scrollTo(0, -this.themeTopY[index], 500)
     }
   }
 }

@@ -49,6 +49,9 @@ import {
   getHomeMultidata, getHomeGoods
 } from 'network/home'
 
+// import { debounce } from 'common/utils'
+import { itemListenerMixin } from 'common/mixin'
+
 import navBar from 'components/common/navbar/navBar'
 import tabControl from 'components/content/tabControl/tabControl'
 import homeSwiper from './childrenComps/homeSwiper'
@@ -63,6 +66,7 @@ import featureView from './childrenComps/featureView.vue'
 
 export default {
   name: 'home',
+  mixins:[itemListenerMixin],
   data () {
     return {
       banners: {
@@ -112,11 +116,11 @@ export default {
   //被包含在 keep-alive 中创建的组件，会多出两个生命周期的钩子: activated 与 deactivated
   //用两个生命周期钩子保存状态以实现滚动进度的保存
   activated () {
-    const refresh = this.debounce(this.$refs.scroll.refresh, 500)
-    this.itemImgListener = () => {  //使用事件总线监听数据的变化
-      refresh()                    //对监听的事件进行命名以准确停止监听该事件
-    }
-    this.$bus.$on('itemImgLoad', this.itemImgListener)
+    // const refresh = debounce(this.$refs.scroll.refresh, 500)
+    // this.itemImgListener = () => {  //使用事件总线监听数据的变化
+    //   refresh()                    //对监听的事件进行命名以准确停止监听该事件
+    // }
+    // this.$bus.$on('itemImgLoad', this.itemImgListener)
 
     this.$refs.scroll.scroll.scrollTo(0, this.scrollY, 0)
   },
@@ -130,20 +134,20 @@ export default {
     }
   },
   methods: {
-    //所有组件都有一个$el属性来获取组件中的元素
+    //所有组件都有一个$el属性来获取组件中的根元素
     //获取组件元素的offsetTop属性
     offsetImg () {
       this.tabControlOffsetTop = this.$refs.tabControl.$el.offsetTop
     },
-    debounce (func, delay) {   //防抖（节流）函数，防止请求过多等
-      let timer
-      return function (...args) {
-        if (timer) clearTimeout(timer)
-        timer = setTimeout(() => {
-          func.apply(this, args)
-        }, delay)
-      }
-    },
+    // debounce (func, delay) {
+    //   let timer
+    //   return function (...args) {
+    //     if (timer) clearTimeout(timer)
+    //     timer = setTimeout(() => {
+    //       func.apply(this, args)
+    //     }, delay)
+    //   }
+    // },
     backTopCtrl (val) {
       this.backTopShow = val[0]
       //tabControl吸顶控制
