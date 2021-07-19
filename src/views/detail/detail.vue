@@ -1,10 +1,15 @@
 <template>
   <div id='detail'>
-    <detailNavBar @titleClick='titleClick'></detailNavBar>
+    <detailNavBar
+      @titleClick='titleClick'
+      ref='navbar'
+    ></detailNavBar>
     <scroll
       class='content'
       ref='scroll'
       :pullUpLoad='true'
+      @scroll='contentScroll'
+      @backTopCtrl='backTopCtrl(arguments)'
     >
 
       <detailSwiper :imgs='topImgs'></detailSwiper>
@@ -14,28 +19,42 @@
         :detailInfo='detailInfo'
         @imgLoad='imgLoad'
       ></detailGoodsInfo>
-      <detailParamInfo ref='paramInfo' :paramInfo='paramInfo'></detailParamInfo>
-      <detailCommentInfo ref='commentInfo' :commentInfo='commentInfo'></detailCommentInfo>
-      <goodsList ref='recommends' :goods='recommends' />
+      <detailParamInfo
+        ref='paramInfo'
+        :paramInfo='paramInfo'
+      ></detailParamInfo>
+      <detailCommentInfo
+        ref='commentInfo'
+        :commentInfo='commentInfo'
+      ></detailCommentInfo>
+      <goodsList
+        ref='recommends'
+        :goods='recommends'
+      />
     </scroll>
-
+    <detailBottomBar></detailBottomBar>
+    <backTop
+      v-show='backTopShow'
+      @click.native='backTop'
+    ></backTop>
   </div>
 </template>
 
 <script>
 import { getDetail, Goods, shop, goodsParam, getRecommend } from 'network/detail.js'
 
-import { itemListenerMixin } from 'common/mixin'
+import { itemListenerMixin, backTopMixin } from 'common/mixin'
 
 import { debounce } from 'common/utils'
 
-import detailNavBar from './detailComps/detailNavBar.vue'
+import detailNavBar from './detailComps/detailNavBar'
 import detailSwiper from './detailComps/detailSwiper'
 import detailBaseInfo from './detailComps/detailBaseInfo'
 import detailShopInfo from './detailComps/detailShopInfo'
 import detailGoodsInfo from './detailComps/detailGoodsInfo'
 import detailParamInfo from './detailComps/detailParamInfo'
 import detailCommentInfo from './detailComps/detailCommentInfo'
+import detailBottomBar from './detailComps/detailBottomBar'
 
 import goodsList from 'components/content/goods/goodsList'
 
@@ -43,7 +62,7 @@ import scroll from 'components/common/scroll/scroll'
 
 export default {
   name: 'detail',
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data () {
     return {
       iid: null,
@@ -65,6 +84,7 @@ export default {
     detailGoodsInfo,
     detailParamInfo,
     detailCommentInfo,
+    detailBottomBar,
 
     goodsList,
 
@@ -83,7 +103,7 @@ export default {
       if (data.rate.cRare != 0) {
         this.commentInfo = data.rate.list[0]
       }
-      this.getThemeTopY = debounce(()=>{
+      this.getThemeTopY = debounce(() => {
         this.themeTopY = []
         this.themeTopY.push(0)
         this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
@@ -103,16 +123,33 @@ export default {
     loadMore () {
 
     },
-    backTopCtrl () {
-
+    backTopCtrl (val) {
+      this.backTopShow = val[0]
     },
     imgLoad () {
       this.$refs.scroll.refresh()
-       this.getThemeTopY()
+      this.getThemeTopY()
     },
     titleClick (index) {
       console.log(index);
       this.$refs.scroll.scroll.scrollTo(0, -this.themeTopY[index], 500)
+    },
+    contentScroll (pos) {
+      let posY = -pos.y
+      let length = this.themeTopY.length
+
+      for (let i in this.themeTopY) {
+        // console.log('scroll',i + 1,posY,this.themeTopY[i],this.themeTopY[i + 1]);
+        // console.log(posY >= this.themeTopY[i] && posY < this.themeTopY[i + 1] );
+        if (this.currentIndex != i &&
+          ((i < length && posY >= this.themeTopY[i] && posY < this.themeTopY[i - (-1)]) ||
+            (i == length - 1 && posY >= this.themeTopY[i])
+          )
+        ) {
+          this.currentIndex = i
+          this.$refs.navbar.currentIndex = Number(i)
+        }
+      }
     }
   }
 }

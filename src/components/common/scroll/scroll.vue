@@ -12,7 +12,7 @@
 
 <script>
 import BScroll from 'better-scroll'
-
+import { debounce } from 'common/utils'
 export default {
   name: 'scroll',
   props: {
@@ -21,7 +21,16 @@ export default {
       default () {
         return false
       }
+    },
+    probeType: {  //控制派发事件模式，3为全模式派发
+      type: Number,
+      default: 3
     }
+  },
+  created () {
+    this.monitorScrollY = debounce(() => {
+      this.$emit('scroll', pos.y)
+    })
   },
   mounted () {
     // document.querySelector('.wrapper') 获取第一个对应的class元素，当有多个同样的class时不准确
@@ -38,6 +47,12 @@ export default {
         this.$emit('backTopCtrl', true, pos.y)
       } else {
         this.$emit('backTopCtrl', false, pos.y)
+      }
+      if (!this.scrollCount) this.scrollCount = 0
+      this.scrollCount += 1
+      if (this.scrollCount == 10) {
+        this.scrollCount = 0
+        this.$emit('scroll', pos)
       }
     })
     scroll.on('pullingUp', () => {
