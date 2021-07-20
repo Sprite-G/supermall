@@ -29,7 +29,7 @@ export default {
   name: 'detailBottomBar',
   methods: {
     addToCart () {
-
+      this.$emit('addCart')
     }
   }
 }

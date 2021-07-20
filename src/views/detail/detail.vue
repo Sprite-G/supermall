@@ -32,7 +32,7 @@
         :goods='recommends'
       />
     </scroll>
-    <detailBottomBar></detailBottomBar>
+    <detailBottomBar @addCart='addToCart'></detailBottomBar>
     <backTop
       v-show='backTopShow'
       @click.native='backTop'
@@ -120,6 +120,14 @@ export default {
 
   },
   methods: {
+    addToCart () {
+      const product = {}
+      product.image = this.topImgs[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.realPrice
+      product.iid = this.iid
+    },
     loadMore () {
 
     },
