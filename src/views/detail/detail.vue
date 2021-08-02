@@ -73,7 +73,8 @@ export default {
       paramInfo: {},
       commentInfo: {},
       recommends: [],
-      themeTopY: [0, 1000, 2000, 3000]
+      themeTopY: [0, 1000, 2000, 3000],
+      getThemeTopY: null
     }
   },
   components: {
@@ -103,18 +104,18 @@ export default {
       if (data.rate.cRare != 0) {
         this.commentInfo = data.rate.list[0]
       }
-      this.getThemeTopY = debounce(() => {
-        this.themeTopY = []
-        this.themeTopY.push(0)
-        this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
-        this.themeTopY.push(this.$refs.commentInfo.$el.offsetTop)
-        this.themeTopY.push(this.$refs.recommends.$el.offsetTop)
-        console.log('getThemeTopY', this.themeTopY);
-      })
     })
     getRecommend().then(res => {
       this.recommends = res.data.list
     })
+    this.getThemeTopY = debounce(() => {
+      this.themeTopY = []
+      this.themeTopY.push(0)
+      this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
+      this.themeTopY.push(this.$refs.commentInfo.$el.offsetTop)
+      this.themeTopY.push(this.$refs.recommends.$el.offsetTop)
+      console.log('getThemeTopY', this.themeTopY);
+    }, 100)
   },
   mounted () {
 
@@ -129,7 +130,7 @@ export default {
       product.iid = this.iid
 
       // this.$store.commit('addCart',product)
-      this.$store.dispatch('addCart',product)
+      this.$store.dispatch('addCart', product)
     },
     loadMore () {
 

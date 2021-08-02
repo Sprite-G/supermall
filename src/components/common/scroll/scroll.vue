@@ -19,7 +19,7 @@ export default {
     pullUpLoad: {
       type: Boolean,
       default () {
-        return false
+        return true
       }
     },
     probeType: {  //控制派发事件模式，3为全模式派发
