@@ -60,6 +60,8 @@ import goodsList from 'components/content/goods/goodsList'
 
 import scroll from 'components/common/scroll/scroll'
 
+import { mapActions } from 'vuex'
+
 export default {
   name: 'detail',
   mixins: [itemListenerMixin, backTopMixin],
@@ -120,7 +122,10 @@ export default {
   mounted () {
 
   },
+  computed: {
+  },
   methods: {
+    ...mapActions(['addCart']),
     addToCart () {
       const product = {}
       product.image = this.topImgs[0]
@@ -130,7 +135,12 @@ export default {
       product.iid = this.iid
 
       // this.$store.commit('addCart',product)
-      this.$store.dispatch('addCart', product)
+      // this.$store.dispatch('addCart', product).then(msg => {
+      //   console.log(msg);
+      // })
+      this.addCart(product).then(msg => {
+        console.log(msg);
+      })
     },
     loadMore () {
 

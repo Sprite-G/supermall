@@ -5,6 +5,7 @@
     </navBar>
     <cartList :list='cartList'>
     </cartList>
+    <cart-bottomBar></cart-bottomBar>
   </div>
 </template>
 
@@ -14,12 +15,14 @@ import { mapGetters } from 'vuex'  //导入并使用辅助函数将store中的ge
 import navBar from 'components/common/navbar/navBar'
 
 import cartList from './childComps/cartList'
+import CartBottomBar from './childComps/CartBottomBar'
 
 export default {
   name: 'cart',
   components: {
     navBar,
     cartList,
+    CartBottomBar
   },
   computed: {
     ...mapGetters([
