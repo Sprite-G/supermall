@@ -139,7 +139,8 @@ export default {
       //   console.log(msg);
       // })
       this.addCart(product).then(msg => {
-        console.log(msg);
+        console.log(this);
+        this.$toast.show(msg, 1000)
       })
     },
     loadMore () {
